@@ -1,0 +1,13 @@
+put large file here to see
+buffered output in action
+
+like 60MB or more
+
+http://download.blender.org/peach/bigbuckbunny_movies/
+
+
+add "content type" entry to main.go
+
+
+on activity monitor
+main   ...   197.9MB

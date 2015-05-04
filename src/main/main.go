@@ -28,6 +28,8 @@ func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             contentType = "image/png"
         } else if strings.HasSuffix(path, ".svg") {
             contentType = "image/svg+xml"
+        } else if strings.HasSuffix(path, ".mp4") {
+            contentType = "video/mp4"
         } else {
             contentType = "text/plain"
         }
