@@ -26,6 +26,8 @@ func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             contentType = "application/javascript"
         } else if strings.HasSuffix(path, ".png") {
             contentType = "image/png"
+        } else if strings.HasSuffix(path, ".svg") {
+            contentType = "image/svg+xml"
         } else {
             contentType = "text/plain"
         }
