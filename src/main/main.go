@@ -11,8 +11,8 @@ type MyHandler struct {
 
 func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     path := r.URL.Path[1:]
+    log.Println(path)
 //    path := "templates" + r.URL.Path
-    log.Println("PATH: ", path)
 
     data, err := ioutil.ReadFile(string(path))
 
