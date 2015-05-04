@@ -9,4 +9,4 @@ http://download.blender.org/peach/bigbuckbunny_movies/
 add buffer
 
 on activity monitor
-main   ...   1.1MB
+main   ...   1.6MB
