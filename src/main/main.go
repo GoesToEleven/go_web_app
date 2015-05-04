@@ -22,23 +22,34 @@ import (
     "net/http"
 )
 
-func main() {
-    myMux := http.NewServeMux()
-    myMux.HandleFunc("/", someFunc)
-    http.ListenAndServe(":8080", myMux)
+type person struct {
+    fName string
 }
 
-func someFunc(w http.ResponseWriter, req *http.Request) {
-    w.Write([]byte("Hello Los Angeles"))
+func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    w.Write([]byte("First Name: " + p.fName))
+}
+
+func main() {
+//    mux := http.NewServeMux()
+
+    personOne := &person{fName: "Jim"}
+//    mux.Handle("/", personOne)
+
+    http.ListenAndServe(":8080", personOne)
+//    http.ListenAndServe(":8080", mux)
 }
 
 /*
+We were able to do this because ServeMux also has a ServeHTTP method,
+meaning that it too satisfies the Handler interface.
+
+For me it simplifies things to think of a ServeMux as just being a special kind of handler,
+which instead of providing a response itself passes the request on to a second handler.
+
+This isn't as much of a leap as it first sounds –
+chaining handlers together is fairly commonplace in Go.
+
 from:
 http://www.alexedwards.net/blog/a-recap-of-request-handling
-
-before:
-func main() {
-    http.HandleFunc("/", someFunc)
-    http.ListenAndServe(":8080", nil)
-}
 */
