@@ -4,16 +4,16 @@ import (
     "net/http"
     "io/ioutil"
     "log"
-    "os"
 )
 
 type MyHandler struct {
 }
 
 func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    path := "templates" + r.URL.Path
+    path := r.URL.Path[1:]
+//    path := "templates" + r.URL.Path
     log.Println("PATH: ", path)
-    log.Println("ENV: ", os.Environ())
+
     data, err := ioutil.ReadFile(string(path))
 
     if err == nil {
@@ -63,4 +63,8 @@ and you would be able to access "templates" and "templates/home.html"
 
 this is a good article - though advanced (so don't freak out if you're just getting started)
 https://medium.com/@benbjohnson/structuring-applications-in-go-3b04be4ff091
+
+this can also be useful in debugging:
+-- import "os"
+---- log.Println("ENV: ", os.Environ())
 */
