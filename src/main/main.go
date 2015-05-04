@@ -2,9 +2,10 @@ package main
 
 import (
     "net/http"
-    "io/ioutil"
     "strings"
     "log"
+    "os"
+    "bufio"
 )
 
 type MyHandler struct {
@@ -13,9 +14,11 @@ type MyHandler struct {
 func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     path := r.URL.Path[1:]
     log.Println(path)
-    data, err := ioutil.ReadFile(string(path))
+    f, err := os.Open(path)
 
     if err == nil {
+        bufferedReader := bufio.NewReader(f)
+
         var contentType string
 
         if strings.HasSuffix(path, ".css") {
@@ -35,7 +38,7 @@ func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
         }
 
         w.Header().Add("Content Type", contentType)
-        w.Write(data)
+        bufferedReader.WriteTo(w)
     } else {
         w.WriteHeader(404)
         w.Write([]byte("404 Mi amigo - " + http.StatusText(404)))
