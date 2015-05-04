@@ -13,6 +13,7 @@
       <root url="file://$PROJECT_DIR$/../.DS_Store" />
       <root url="file://$PROJECT_DIR$/../build-web-application-with-golang" />
       <root url="file://$PROJECT_DIR$/../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../../../go_web_tutorial/src" />
       <root url="file:///usr/local/go/src" />
     </CLASSES>
     <SOURCES />
