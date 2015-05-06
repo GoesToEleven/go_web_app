@@ -1,22 +1,14 @@
-/*
-we can use flow control in templates
-*/
-
 package main
 
 import (
     "net/http"
     "text/template"
+//    "html/template"
 )
 
-type Context struct {
-    FirstName string
-    Message string
-    URL string
-    Beers []string
-    Title string
-
-}
+var Message string = "more beer, please sir"
+//var Message string = "alert('you have been pwned')"
+//var Message string = "<script>alert('you have been pwned')</script>"
 
 func main() {
     http.HandleFunc("/", myHandlerFunc)
@@ -25,71 +17,45 @@ func main() {
 
 func myHandlerFunc(w http.ResponseWriter, req *http.Request) {
     w.Header().Add("Content Type", "text/html")
-    templates := template.New("template")
-    templates.New("test").Parse(doc)
-    templates.New("header").Parse(head)
-    templates.New("footer").Parse(foot)
-    context := Context{
-        "Todd",
-        "more beer, please",
-        req.URL.Path,
-        []string{"New Belgium", "La Fin Du Monde", "The Alchemist"},
-        "Favorite Beers",
+    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
+    if err == nil {
+        tmpl.Execute(w, Message)
     }
-    templates.Lookup("test").Execute(w, context)
 }
 
 const doc = `
-{{template "header" .Title}}
-<body>
-
-    <h1>{{.FirstName}} says, "{{.Message}}"</h1>
-
-    {{if eq .URL "/nobeer"}}
-        <h2>We're out of beer, {{.FirstName}}. Sorry!</h2>
-    {{else}}
-        <h2>Yes, grab another beer, {{.FirstName}}</h2>
-        <ul>
-            {{range .Beers}}
-            <li>{{.}}</li>
-            {{end}}
-        </ul>
-    {{end}}
-
-    <hr>
-
-    <h2>Here's all the data:</h2>
-    <p>{{.}}</p>
-</body>
-{{template "footer"}}
-`
-
-const head = `
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>{{.}}</title>
+    <title>Injection Safe</title>
 </head>
-`
+<body>
 
-const foot = `
+    <p>{{.}}</p>
+
+    <script>{{.}}</script>
+
+</body>
 </html>
 `
 
 /*
-create a template that contains all of your templates
-any sub-templates invoked have to be either
--- siblings
--- descendents
-of the parent template
+html/template
+Package template (html/template) implements data-driven templates for generating
+HTML output safe against code injection. It provides the same interface as package
+text/template and should be used instead of text/template whenever the output is HTML.
 
-{{template "header"}}
-"header" is the name we gave the template with template.New
+HTML templates treat data values as plain text which should be encoded so they can be
+safely embedded in an HTML document. The escaping is contextual, so actions can appear
+within JavaScript, CSS, and URI contexts.
 
-func (*Template) Lookup
-func (t *Template) Lookup(name string) *Template
-Lookup returns the template with the given name that is associated with t,
-or nil if there is no such template.
+http://golang.org/pkg/html/template/
+
+to run the above code ...
+try the different Message variables with text/template import
+... then ...
+try the different Message variables with html/template import
+
 
 */
