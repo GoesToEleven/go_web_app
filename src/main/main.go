@@ -15,15 +15,14 @@ import (
 func main() {
     http.HandleFunc("/", myHandlerFunc)
     http.ListenAndServe(":8080", nil)
-    // nil means use default ServeMux
 }
 
 func myHandlerFunc(w http.ResponseWriter, req *http.Request) {
     w.Header().Add("Content Type", "text/html")
     tmpl, err := template.New("anyNameForTemplate").Parse(doc)
     if err == nil {
-        tmpl.Execute(w, nil)
-        // nil means no data to pass in
+        tmpl.Execute(w, req.URL.Path)
+//        tmpl.Execute(w, req.URL.Path[1:])
     }
 }
 
@@ -35,12 +34,58 @@ const doc = `
     <title>First Template</title>
 </head>
 <body>
-    <h1>Hello Jamaica</h1>
+    <h1>Hello {{.}}</h1>
 </body>
 </html>
 `
 
 /*
+{{.}}
+the period is called a "pipeline" in go docs;
+the path the template will take through the data
+to get to the data that needs to be injected;
+the {{.}} says, "use all the data"
+
+try these url's
+http://localhost:8080/
+http://localhost:8080/taiwan
+http://localhost:8080/china/taiwan/singapore/yourMama
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 template.New
 my description: create the template "object"
 go doesn't have constructors like in object oriented languages
