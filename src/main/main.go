@@ -1,5 +1,5 @@
 /*
-create a struct to hold your data
+we can use conditional logic in templates
 */
 
 package main
@@ -12,6 +12,21 @@ import (
 type Context struct {
     FirstName string
     Message string
+    URL string
+}
+
+func main() {
+    http.HandleFunc("/", myHandlerFunc)
+    http.ListenAndServe(":8080", nil)
+}
+
+func myHandlerFunc(w http.ResponseWriter, req *http.Request) {
+    w.Header().Add("Content Type", "text/html")
+    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
+    if err == nil {
+        context := Context{"Todd", "more beer, please", req.URL.Path}
+        tmpl.Execute(w, context)
+    }
 }
 
 const doc = `
@@ -22,77 +37,40 @@ const doc = `
     <title>First Template</title>
 </head>
 <body>
-    <h1>My name is {{.FirstName}}</h1>
-    <p>{{.Message}}</p>
+    {{if eq .URL "/nobeer"}}
+        <h1>We're out of beer. Sorry!</h1>
+    {{else}}
+        <h1>Yes, grab another beer, {{.FirstName}}</h1>
+    {{end}}
+
+    <hr>
+
+    <h2>Here's all the data:</h2>
+    <p>{{.}}</p>
 </body>
 </html>
 `
 
-func toddFunc(w http.ResponseWriter, req *http.Request) {
-    w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        context := Context{"Todd", "more Go, please"}
-        tmpl.Execute(w, context)
-    }
-}
-
-func main() {
-    http.HandleFunc("/todd", toddFunc)
-    http.HandleFunc("/ming", mingFunc)
-    http.HandleFunc("/rio", rioFunc)
-    http.HandleFunc("/", jamesFunc)
-    http.ListenAndServe(":8080", nil)
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-func mingFunc(w http.ResponseWriter, req *http.Request) {
-    w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        context := Context{"Ming", "I am a problem solver!"}
-        tmpl.Execute(w, context)
-    }
-}
-
-func rioFunc(w http.ResponseWriter, req *http.Request) {
-    w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        context := Context{"Rio", "I drank the google-aid"}
-        tmpl.Execute(w, context)
-    }
-}
-
-func jamesFunc(w http.ResponseWriter, req *http.Request) {
-    w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        context := Context{"James", "Another beer, please"}
-        tmpl.Execute(w, context)
-    }
-}
-
 /*
-the pipeline starts at the data {{.}}
-then finds the child specified:
--- fName
--- Message
+conditionals
+if
+if / else
+if / else if
 
-pipelines can be as deep as you want
+testing
+eq - equal
+---- an unlimited number of conditions can be tested against the first term
+------ eq 1 (0+1) (2-1)
+------ if they all evaluate to be the same, the test evaluates to TRUE
+------ operator is listed first, followed by operands
+ne - not equal
+lt - less than
+---- first arg compared to second
+---- first condition less than second - evals to true
+gt - greater than
+le - less than or equal to
+ge - greater than or equal to
 
-nested objects and members
-accessed through drill-down using dot operator
+
+
 */
