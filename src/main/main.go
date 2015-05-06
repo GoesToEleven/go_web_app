@@ -2,60 +2,83 @@ package main
 
 import (
     "net/http"
-    "text/template"
-//    "html/template"
+    "os"
+    "html/template"
 )
 
-var Message string = "more beer, please sir"
-//var Message string = "alert('you have been pwned')"
-//var Message string = "<script>alert('you have been pwned')</script>"
-
 func main() {
-    http.HandleFunc("/", myHandlerFunc)
+    templates := populateTemplates()
+
+    http.HandleFunc("/",
+    func(w http.ResponseWriter, req *http.Request) {
+        requestedFile := req.URL.Path[1:]
+        template := templates.Lookup(requestedFile + ".html")
+
+        if template != nil {
+            template.Execute(w, nil)
+        } else {
+            w.WriteHeader(404)
+        }
+    })
+
+
     http.ListenAndServe(":8080", nil)
 }
 
-func myHandlerFunc(w http.ResponseWriter, req *http.Request) {
-    w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        tmpl.Execute(w, Message)
+func populateTemplates() *template.Template {
+    result := template.New("templates")
+
+    basePath := "templates"
+    templateFolder, _ := os.Open(basePath)
+    defer templateFolder.Close()
+
+    templatePathsRaw, _ := templateFolder.Readdir(-1)
+    // -1 means all of the contents
+    templatePaths := new([]string)
+    for _, pathInfo := range templatePathsRaw {
+        if !pathInfo.IsDir() {
+            *templatePaths = append(*templatePaths,
+            basePath + "/" + pathInfo.Name())
+        }
     }
+
+    result.ParseFiles(*templatePaths...)
+
+    return result
 }
 
-const doc = `
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Injection Safe</title>
-</head>
-<body>
-
-    <p>{{.}}</p>
-
-    <script>{{.}}</script>
-
-</body>
-</html>
-`
 
 /*
-html/template
-Package template (html/template) implements data-driven templates for generating
-HTML output safe against code injection. It provides the same interface as package
-text/template and should be used instead of text/template whenever the output is HTML.
+MODEL
+business logic & rules
+data storage
 
-HTML templates treat data values as plain text which should be encoded so they can be
-safely embedded in an HTML document. The escaping is contextual, so actions can appear
-within JavaScript, CSS, and URI contexts.
+VIEW
+what the client sees
 
-http://golang.org/pkg/html/template/
+CONTROLLER
+the glue between model & view
+coordinates the model & view layers
+determines how the model needs to be interacted with to meet a user's request
+passes the results of the model layers work to the view layer
+responsibilities:
+- generate output and send it back to client
+-- templates
+-- bind data
+- receive user actions
+-- ajax
+-- forms
 
-to run the above code ...
-try the different Message variables with text/template import
-... then ...
-try the different Message variables with html/template import
+
+steps:
+(1) create a template "cache"
+-- one template to hold other templates
+-- all of the "held" templates will be siblings of each other
+--- this means the "held" templates can call/include each other
+--- templates can call/include sibling & descendent templates
+
+test it here
+http://localhost:8080/home
 
 
 */
