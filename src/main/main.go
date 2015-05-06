@@ -25,26 +25,22 @@ func main() {
 
 func myHandlerFunc(w http.ResponseWriter, req *http.Request) {
     w.Header().Add("Content Type", "text/html")
-    tmpl, err := template.New("anyNameForTemplate").Parse(doc)
-    if err == nil {
-        context := Context{
-            "Todd",
-            "more beer, please",
-            req.URL.Path,
-            []string{"New Belgium", "La Fin Du Monde", "The Alchemist"},
-            "Favorite Beers",
-        }
-        tmpl.Execute(w, context)
+    templates := template.New("template")
+    templates.New("test").Parse(doc)
+    templates.New("header").Parse(head)
+    templates.New("footer").Parse(foot)
+    context := Context{
+        "Todd",
+        "more beer, please",
+        req.URL.Path,
+        []string{"New Belgium", "La Fin Du Monde", "The Alchemist"},
+        "Favorite Beers",
     }
+    templates.Lookup("test").Execute(w, context)
 }
 
 const doc = `
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>{{.Title}}</title>
-</head>
+{{template "header" .Title}}
 <body>
 
     <h1>{{.FirstName}} says, "{{.Message}}"</h1>
@@ -65,26 +61,35 @@ const doc = `
     <h2>Here's all the data:</h2>
     <p>{{.}}</p>
 </body>
+{{template "footer"}}
+`
+
+const head = `
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{.}}</title>
+</head>
+`
+
+const foot = `
 </html>
 `
 
 /*
-range
-allows you to loop over data with many items
-array, slice, map, channel
-when you "range" loop over data
-the pipeline {{.}} gets set to the current item in the data
-another way to say this: "the range operator resets the pipeline
-to be the individual item in the collection"
-range / else
-same as range
-however, if the data is len == 0, then
-the else block gets executed
-(eg, empty shopping cart)
+create a template that contains all of your templates
+any sub-templates invoked have to be either
+-- siblings
+-- descendents
+of the parent template
 
-sub-templates
-include templates in templates
-a view can include many different templates
--- call this, call that, call another thing
+{{template "header"}}
+"header" is the name we gave the template with template.New
+
+func (*Template) Lookup
+func (t *Template) Lookup(name string) *Template
+Lookup returns the template with the given name that is associated with t,
+or nil if there is no such template.
 
 */
