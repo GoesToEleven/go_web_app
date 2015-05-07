@@ -3,7 +3,7 @@ package main
 import (
     "net/http"
     "os"
-    "html/template"
+    "text/template"
     "bufio"
     "strings"
     "log"
