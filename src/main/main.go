@@ -7,6 +7,7 @@ import (
     "bufio"
     "strings"
     "log"
+    "viewmodels"
 )
 
 func main() {
@@ -15,14 +16,21 @@ func main() {
     http.HandleFunc("/",
     func(w http.ResponseWriter, req *http.Request) {
         requestedFile := req.URL.Path[1:]
-        template := templates.Lookup(requestedFile + ".html")
+        template :=
+        templates.Lookup(requestedFile + ".html")
 
+        var context interface{} = nil
+        switch requestedFile {
+            case "home":
+            context = viewmodels.GetHome()
+        }
         if template != nil {
-            template.Execute(w, nil)
+            template.Execute(w, context)
         } else {
             w.WriteHeader(404)
         }
     })
+
     http.HandleFunc("/img/", serveResource)
     http.HandleFunc("/css/", serveResource)
     http.HandleFunc("/scripts/", serveResource)
@@ -69,7 +77,6 @@ func populateTemplates() *template.Template {
     defer templateFolder.Close()
 
     templatePathsRaw, _ := templateFolder.Readdir(-1)
-    // -1 means all of the contents
     templatePaths := new([]string)
     for _, pathInfo := range templatePathsRaw {
         log.Println(pathInfo.Name())
@@ -86,6 +93,32 @@ func populateTemplates() *template.Template {
 
 
 /*
+we're going to break our main html page down into different parts
+--- header
+--- content1
+--- content2
+--- footer
+
+This will help with
+-- code reusability
+-- organizing our data and keeping it clean
+
+we are going to separate the data that is used in the VIEW layer
+from the rest of the data that the application uses
+-- good practice as the needs of the VIEW and MODEL layer differ over time
+
+create:
+viewmodels / home.go
+
+add this to main.go imports:
+"viewmodels"
+
+
+
+test it here
+http://localhost:8080/home
+
+
 MODEL
 business logic & rules
 data storage
@@ -105,14 +138,6 @@ responsibilities:
 - receive user actions
 -- ajax
 -- forms
-
-change your references in your HTML files from this stuff ...
-<link rel='stylesheet' href='../public/css/flyout_menu.css'>
-... to this stuff ...
-<link rel='stylesheet' href='/css/flyout_menu.css'>
-
-test it here
-http://localhost:8080/home
 
 
 */
