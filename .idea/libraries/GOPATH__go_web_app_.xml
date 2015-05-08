@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="GOPATH &lt;go_web_app&gt;">
-    <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../../../golib/src" />
-      <root url="file:///usr/local/go/src" />
-    </CLASSES>
-    <SOURCES />
-  </library>
-</component>
