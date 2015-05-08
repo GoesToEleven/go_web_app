@@ -2,13 +2,13 @@ package main
 
 import (
     "net/http"
-    "text/template"
-//    "html/template"
+//    "text/template"
+    "html/template"
 )
 
-var Message string = "more beer, please sir"
+//var Message string = "more beer, please sir"
 //var Message string = "alert('you have been pwned')"
-//var Message string = "<script>alert('you have been pwned')</script>"
+var Message string = "<script>alert('you have been pwned, BIATCH')</script>"
 
 func main() {
     http.HandleFunc("/", myHandlerFunc)
