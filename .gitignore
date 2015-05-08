@@ -32,6 +32,8 @@ _testmain.go
 
 ## Directory-based project format:
 .idea/
+.idea/workspace.xml
+**/.idea/workspace.xml
 
 # if you remove the above rule, at least ignore the following:
 
