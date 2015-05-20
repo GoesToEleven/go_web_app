@@ -6,13 +6,19 @@ body {
     font-family: 'Droid Sans', sans-serif;
 }
 
-article {
+article, form {
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
     height: 100vh;
 }
+
+/*
+=================
+HOME
+=================
+*/
 
 blockquote {
     padding: 0 15px;
@@ -26,13 +32,29 @@ blockquote p:last-child {
     padding-top: 3px;
 }
 
-
 /*
 =================
-comment
+SEARCH
 =================
 */
 
+form {
+    -webkit-appearance: none;
+    border: none;
+    width: 100%;
+    font-size: 4.15em;
+    color: #d62323;
+    border: none;
+    border-bottom: 2px solid #d62323;
+    background-color: transparent;
+    padding: .4rem;
+    box-shadow: none;
+    border-radius: 0;
+    background-clip: padding-box;
+    font-family: 'helvetica';
+    font-size: 3.4rem;
+    font-weight: 100;
+}
 
 /*
 =================

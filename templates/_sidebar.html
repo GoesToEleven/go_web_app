@@ -7,11 +7,12 @@ SIDEBAR
 <aside class="sidebar" id="sidebar">
     <nav class="menu-items">
         <ul>
-            <li><a href="#" {{if eq . "home"}}class="active"{{end}}>Home</a></li>
-            <li><a href="#" {{if eq . "me"}}class="active"{{end}}>Me</a></li>
-            <li><a href="#" {{if eq . "interactions"}}class="active"{{end}}>Interactions</a></li>
-            <li><a href="#" {{if eq . "something"}}class="active"{{end}}>Something else</a></li>
-            <li><a href="#" {{if eq . "sign"}}class="active"{{end}}>Sign Out</a></li>
+            <li><a href="home" {{if eq .Active "home"}}class="active"{{end}}>Home</a></li>
+            <li><a href="stories" {{if eq .Active "stories"}}class="active"{{end}}>Stories</a></li>
+            <li><a href="search" {{if eq .Active "search"}}class="active"{{end}}>Search</a></li>
+            <li><a href="share" {{if eq .Active "share"}}class="active"{{end}}>Share</a></li>
+            <li><a href="me" {{if eq .Active "me"}}class="active"{{end}}>
+                {{if .SignedIn}}Me{{else}}Sign in{{end}}</a></li>
         </ul>
     </nav>
 

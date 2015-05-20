@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .down-arrow {
+            fill: #00F;
+            stroke: #0F0;
+            stroke-width: .4px;
+        }
+    </style>
+</head>
+<body>
+
+<!--img tag SVG-->
+<div style="width: 20%;">
+    <img src="down_optimised.svg">
+</div>
+
+<!--inline SVG-->
+<div style="width: 20%;">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 11.1 12.3"
+         enable-background="new 0 0 11.1 12.3" xml:space="preserve">
+    <path d="M10.5 6.4l-4.4 4.4C6 11 5.8 11.1 5.6 11.1S5.1 11 5 10.8L0.6 6.4C0.4 6.3 0.4 6.1 0.4
+    5.8s0.1-0.4 0.3-0.6l0.5-0.5c0.2-0.2 0.4-0.2 0.6-0.2s0.4 0.1 0.6 0.2l2 2V2c0-0.5 0.4-0.9 0.9-0.9H6c0.5
+    0 0.9 0.4 0.9 0.9v4.7l2-2C9 4.6 9.2 4.5 9.4 4.5S9.9 4.6 10 4.7l0.5 0.5c0.2 0.2 0.2 0.4 0.2 0.6S10.7 6.3
+    10.5 6.4z"/>
+</svg>
+</div>
+
+
+<!--inline SVG with CSS inline style-->
+<div style="width: 20%;">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 11.1 12.3"
+         enable-background="new 0 0 11.1 12.3" xml:space="preserve">
+    <path style="fill: #00FF00;" d="M10.5 6.4l-4.4 4.4C6 11 5.8 11.1 5.6 11.1S5.1 11 5 10.8L0.6 6.4C0.4 6.3 0.4 6.1 0.4
+    5.8s0.1-0.4 0.3-0.6l0.5-0.5c0.2-0.2 0.4-0.2 0.6-0.2s0.4 0.1 0.6 0.2l2 2V2c0-0.5 0.4-0.9 0.9-0.9H6c0.5
+    0 0.9 0.4 0.9 0.9v4.7l2-2C9 4.6 9.2 4.5 9.4 4.5S9.9 4.6 10 4.7l0.5 0.5c0.2 0.2 0.2 0.4 0.2 0.6S10.7 6.3
+    10.5 6.4z"/>
+</svg>
+</div>
+
+<!--inline SVG with CSS class-->
+<div style="width: 20%;">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 11.1 12.3"
+         enable-background="new 0 0 11.1 12.3" xml:space="preserve">
+    <path class="down-arrow" d="M10.5 6.4l-4.4 4.4C6 11 5.8 11.1 5.6 11.1S5.1 11 5 10.8L0.6 6.4C0.4 6.3 0.4 6.1 0.4
+    5.8s0.1-0.4 0.3-0.6l0.5-0.5c0.2-0.2 0.4-0.2 0.6-0.2s0.4 0.1 0.6 0.2l2 2V2c0-0.5 0.4-0.9 0.9-0.9H6c0.5
+    0 0.9 0.4 0.9 0.9v4.7l2-2C9 4.6 9.2 4.5 9.4 4.5S9.9 4.6 10 4.7l0.5 0.5c0.2 0.2 0.2 0.4 0.2 0.6S10.7 6.3
+    10.5 6.4z"/>
+</svg>
+</div>
+
+
+<!--Simply pasting the SVG code into your HTML or CSS is an easy way to inline that content,
+but it isn't cached as an image. If you want to add SVG inline
+and also have that image caching, you can insert the SVG inside of an image tag. And this still
+allows you to control it with CSS and scripting, and animate it.
+source: lynda.com
+
+Forever we talked about encoding dataURI, but it can be larger. We can insert the SVG directly as long
+as the # character is encoded for certain browsers (IE, Firefox). Encode it here:
+
+http://pressbin.com/tools/urlencode_urldecode/
+
+use this one for encoded SVG: encodeURIComponent()
+
+then use this code as your img tag:
+
+<img src='data:image/svg+xml;charset=utf-8,
+
+then add in the encoded SVG
+
+*By putting the SVG in an <img> tag, it can be cached—that's one reason for this method.
+
+source: http://hidpi.brianwoodtraining.com/svg.php
+-->
+
+<!--inline SVG & img tag allows caching -->
+
+<div style="width: 20%;">
+    <img src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%2011.1%2012.3%22%20enable-background%3D%22new%200%200%2011.1%2012.3%22%20xml%3Aspace%3D%22preserve%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M10.5%206.4l-4.4%204.4C6%2011%205.8%2011.1%205.6%2011.1S5.1%2011%205%2010.8L0.6%206.4C0.4%206.3%200.4%206.1%200.4%205.8s0.1-0.4%200.3-0.6l0.5-0.5c0.2-0.2%200.4-0.2%200.6-0.2s0.4%200.1%200.6%200.2l2%202V2c0-0.5%200.4-0.9%200.9-0.9H6c0.5%200%200.9%200.4%200.9%200.9v4.7l2-2C9%204.6%209.2%204.5%209.4%204.5S9.9%204.6%2010%204.7l0.5%200.5c0.2%200.2%200.2%200.4%200.2%200.6S10.7%206.3%2010.5%206.4z%22%2F%3E%0A%3C%2Fsvg%3E%0A'>
+</div>
+
+</body>
+</html>

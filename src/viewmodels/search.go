@@ -1,10 +1,10 @@
 package viewmodels
 
-func GetHome() ViewModel {
+func GetSearch() ViewModel {
     result := ViewModel{
-        Title: "Stories",
+        Title: "Search Stories",
         SignedIn: false,
-        Active: "home",
+        Active: "search",
     }
     return result
 }

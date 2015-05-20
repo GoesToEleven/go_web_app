@@ -23,6 +23,8 @@ func main() {
         switch requestedFile {
             case "home":
             context = viewmodels.GetHome()
+            case "search":
+            context = viewmodels.GetSearch()
         }
         if template != nil {
             template.Execute(w, context)
