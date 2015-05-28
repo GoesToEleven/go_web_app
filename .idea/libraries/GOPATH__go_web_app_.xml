@@ -2,17 +2,6 @@
   <library name="GOPATH &lt;go_web_app&gt;">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../../../../golib/src" />
-      <root url="file://$PROJECT_DIR$/../../../.DS_Store" />
-      <root url="file://$PROJECT_DIR$/../../.idea" />
-      <root url="file://$PROJECT_DIR$/../../golang" />
-      <root url="file://$PROJECT_DIR$/../../matryer" />
-      <root url="file://$PROJECT_DIR$/../../.DS_Store" />
-      <root url="file://$PROJECT_DIR$/../csuf" />
-      <root url="file://$PROJECT_DIR$/../tooling" />
-      <root url="file://$PROJECT_DIR$/../projects" />
-      <root url="file://$PROJECT_DIR$/../.DS_Store" />
-      <root url="file://$PROJECT_DIR$/../build-web-application-with-golang" />
-      <root url="file://$PROJECT_DIR$/../../../golang.org" />
       <root url="file:///usr/local/go/src" />
     </CLASSES>
     <SOURCES />
