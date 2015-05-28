@@ -13,8 +13,7 @@ body {
     margin: 0 auto;
     min-height: 100%;
     height: 100%;
-    background: url("http://www.jiki.net/web/images/company/background.jpg") fixed center center no-repeat;
-    background-size: cover;
+    background-color: #000;
 }
 
 body.overlay {
@@ -96,7 +95,7 @@ form[role="search"].active {
     letter-spacing: -.02em;
 }
 
-.icon-remove-sign {
+.icon-plus-sign {
     display: block;
     cursor: pointer;
     color: white;
@@ -106,7 +105,7 @@ form[role="search"].active {
     right: 1rem;
     font-size: 3rem;
     z-index: 1;
-    cursor: pointer;
+    fill: #FFF;
 }
 
 form[role="search"].hid {
