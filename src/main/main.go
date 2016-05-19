@@ -32,7 +32,7 @@ func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             contentType = "text/plain"
         }
 
-        w.Header().Add("Content Type", contentType)
+        w.Header().Add("Content-Type", contentType)
         w.Write(data)
     } else {
         w.WriteHeader(404)
